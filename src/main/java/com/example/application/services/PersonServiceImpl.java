@@ -25,7 +25,19 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
+    public Set<Person> getList(String filter,Long systemUserId) {
+        Set<Person> personSet =new HashSet<>();
+        personRepository.findByNameContainingAndSystemUserId(filter,systemUserId).iterator().forEachRemaining(personSet::add);
+        return personSet;
+    }
+
+    @Override
     public Person save(Person p) {
         return personRepository.save(p);
+    }
+
+    @Override
+    public void delete(Person p) {
+        personRepository.delete(p);
     }
 }
